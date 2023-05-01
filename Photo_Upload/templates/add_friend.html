@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <style media="screen">
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+    <h2>Latrell Laurio's Profile</h2>
+    <table>
+      <th>Tag</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Status</th>
+      <th>Follow Me</th>
+
+    {% for names in data %}
+    {% if names != "@laurio": %}
+    <tr>
+      <td>{{names}}</td>
+      <td>{{data[names]['first_name']}}</td>
+      <td>{{data[names]['last_name']}}</td>
+      <td>{{status[names]}}</td>
+      {% if status[names] == "You are being followed by" or status[names] == "no relationship" %}
+      <td><form action="/add_friend" method="POST">
+        <input type="hidden" name="Person" value="{{names}}">
+        <button type="submit">Follow</button>
+      </form></td>
+      {% else %}
+      <td><form action="/remove_friend" method="POST">
+        <input type="hidden" name="Person" value="{{names}}">
+        <button type="submit">Unfollow</button>
+      </form></td>
+      {% endif %}
+    </tr>
+    {% endif %}
+    {% endfor %}
+    </table>
+
+  </body>
+</html>
